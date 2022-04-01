@@ -34,7 +34,7 @@ def register_handlers_client(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(greeting, commands=['start'])
     dp.register_message_handler(lk, Text(equals='Личный кабинет'))
     dp.register_message_handler(ob, Text(equals='Общежития'))
-    dp.register_message_handler(ss, Text(equals='Студенческий_совет'))
-    dp.register_message_handler(zv, Text(equals='Задать_вопрос'))
+    dp.register_message_handler(ss, Text(equals='Студенческий совет'))
+    dp.register_message_handler(zv, Text(equals='Задать вопросы'))
     dp.register_message_handler(ka, Text(equals='Контакты'))
 
