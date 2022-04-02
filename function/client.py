@@ -26,7 +26,6 @@ async def zv(message: types.Message):
     await bot.send_message(message.from_user.id, 'ЗВ')
 
 
-@dp.message_handler(commands=['Контакты администрации'])
 async def ka(message: types.Message):
     await bot.send_message(message.from_user.id, 'КА')
 

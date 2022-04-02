@@ -1,7 +1,7 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 
 # команды
-kb1 = KeyboardButton(text='Личный кабинет')
+kb1 = KeyboardButton('Личный кабинет')
 kb2 = KeyboardButton('Общежития')
 kb3 = KeyboardButton('Студенческий совет')
 kb4 = KeyboardButton('Задать вопросы')
