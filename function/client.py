@@ -4,6 +4,14 @@ from keyboards.client_kb import kb_client
 from keyboards.client_kb import lkkb_client
 from aiogram.dispatcher.filters import Text
 
+import sqlite3 as sq
+
+def sql_start():
+    global base, cur
+    base = sq.connect('basa.db')
+    cur = base.cursor()
+
+
 
 # приветствие
 async def greeting(message: types.Message):
@@ -30,6 +38,10 @@ async def zv(message: types.Message):
 async def ka(message: types.Message):
     await bot.send_message(message.from_user.id, 'КА')
 
+async def enter_from_bd(message: types.Message):
+    for i in cur.execute('SELECT * FROM ega').fetchall():
+        await bot.send_message(message.from_user.id, f"dsa {i[0]} {i[1]}")
+
 def register_handlers_client(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(greeting, commands=['start'])
     dp.register_message_handler(lk, Text(equals='Личный кабинет'))
@@ -37,4 +49,5 @@ def register_handlers_client(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(ss, Text(equals='Студенческий совет'))
     dp.register_message_handler(zv, Text(equals='Задать вопросы'))
     dp.register_message_handler(ka, Text(equals='Контакты'))
+    dp.register_message_handler(enter_from_bd, Text(equals='Регистрация'))
 
