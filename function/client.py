@@ -1,6 +1,7 @@
 from aiogram import types, Dispatcher
 from dop import dp, bot
 from keyboards.client_kb import kb_client
+from keyboards.client_kb import lkkb_client
 from aiogram.dispatcher.filters import Text
 
 
@@ -11,7 +12,7 @@ async def greeting(message: types.Message):
 
 
 async def lk(message: types.Message):
-    await bot.send_message(message.from_user.id, 'ЛК')
+    await bot.send_message(message.from_user.id, 'ЛК', reply_markup=lkkb_client)
 
 
 async def ob(message: types.Message):
@@ -19,7 +20,7 @@ async def ob(message: types.Message):
 
 
 async def ss(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Студ совет')
+    await bot.send_message(message.from_user.id, 'Студсовет')
 
 
 async def zv(message: types.Message):
