@@ -2,6 +2,10 @@ from aiogram import types, Dispatcher
 from dop import dp, bot
 from keyboards.client_kb import kb_client
 from keyboards.client_kb import lkkb_client
+from keyboards.client_kb import obkb_client
+from keyboards.client_kb import sskb_client
+from keyboards.client_kb import zvkb_client
+
 from aiogram.dispatcher.filters import Text
 
 import sqlite3 as sq
@@ -16,8 +20,9 @@ def sql_start():
 
 # приветствие
 async def greeting(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Привет, студенты политеха разработали этого бота для тебя',
-                           reply_markup=kb_client)
+    await bot.send_message(message.from_user.id, 'Привет, политехник! Команда Объединенного Студенческого Совета нашего\
+ университета создала этого бота для помощи решения вопросов, касающихся общежитий и Студенческого Совета!\n\n\
+Чтобы начать, нажми кнопку или отправь сообщение!', reply_markup=kb_client)
 
 
 async def lk(message: types.Message):
