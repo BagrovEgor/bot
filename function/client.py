@@ -2,9 +2,11 @@ from aiogram import types, Dispatcher
 from dop import dp, bot
 from keyboards.client_kb import kb_client
 from keyboards.client_kb import lkkb_client
+from keyboards.client_kb import sskb_client
 from aiogram.dispatcher.filters import Text
 
 import sqlite3 as sq
+
 
 def sql_start():
     global base, cur
@@ -28,7 +30,7 @@ async def ob(message: types.Message):
 
 
 async def ss(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Студсовет')
+    await bot.send_message(message.from_user.id, 'Студсовет', reply_markup=sskb_client)
 
 
 async def zv(message: types.Message):

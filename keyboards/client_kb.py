@@ -16,3 +16,12 @@ lkkb2 = KeyboardButton(text='Выход')
 
 lkkb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 lkkb_client.add(lkkb1).add(lkkb2)
+
+# Студенческий совет
+sskb1 = KeyboardButton(text='Информация')
+sskb2 = KeyboardButton(text='Мероприятия')
+sskb3 = KeyboardButton(text='Задать вопрос')
+sskb4 = KeyboardButton(text='Отменить действие')
+
+sskb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+sskb_client.add(sskb1).add(sskb2).add(sskb3).add(sskb4)
