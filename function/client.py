@@ -10,6 +10,8 @@ from aiogram.dispatcher.filters import Text
 
 import sqlite3 as sq
 
+keyboard = 1
+
 def sql_start():
     global base, cur
     base = sq.connect('basa.db')
@@ -26,26 +28,32 @@ async def greeting(message: types.Message):
 
 async def lk(message: types.Message):
     await bot.send_message(message.from_user.id, 'ЛК', reply_markup=lkkb_client)
+    keyboard = 1
 
 
 async def ob(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Общага')
-
+    await bot.send_message(message.from_user.id, 'Общага', reply_markup=obkb_client)
+    keyboard = 2
 
 async def ss(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Студсовет')
-
+    await bot.send_message(message.from_user.id, 'Студсовет', reply_markup=sskb_client)
+    keyboard = 3
 
 async def zv(message: types.Message):
-    await bot.send_message(message.from_user.id, 'ЗВ')
+    await bot.send_message(message.from_user.id, 'ЗВ', reply_markup=zvkb_client)
+    keyboard = 4
 
 
 async def ka(message: types.Message):
     await bot.send_message(message.from_user.id, 'КА')
 
+
 async def enter_from_bd(message: types.Message):
     for i in cur.execute('SELECT * FROM ega').fetchall():
         await bot.send_message(message.from_user.id, f"dsa {i[0]} {i[1]}")
+
+async def back(message: types.Message):
+        await bot.send_message(message.from_user.id, 'Действие отменено',reply_markup=kb_client)
 
 def register_handlers_client(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(greeting, commands=['start'])
@@ -55,4 +63,6 @@ def register_handlers_client(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(zv, Text(equals='Задать вопросы'))
     dp.register_message_handler(ka, Text(equals='Контакты'))
     dp.register_message_handler(enter_from_bd, Text(equals='Регистрация'))
+    dp.register_message_handler(back, Text(equals='Отменить действие'))
+
 
