@@ -25,3 +25,10 @@ sskb4 = KeyboardButton(text='Отменить действие')
 
 sskb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 sskb_client.add(sskb1).add(sskb2).add(sskb3).add(sskb4)
+
+# Задать вопросы
+zvkb1 = KeyboardButton(text='Отправить')
+zvkb2 = KeyboardButton(text='Отменить действие')
+
+zvkb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+zvkb_client.add(zvkb1).add(zvkb2)
