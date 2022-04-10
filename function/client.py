@@ -2,7 +2,6 @@ from aiogram import types, Dispatcher
 from dop import dp, bot
 from keyboards.client_kb import kb_client
 from keyboards.client_kb import lkkb_client
-from keyboards.client_kb import obkb_client
 from aiogram.dispatcher.filters import Text
 
 import sqlite3 as sq
@@ -25,7 +24,7 @@ async def lk(message: types.Message):
 
 
 async def ob(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Общага', reply_markup=obkb_client)
+    await bot.send_message(message.from_user.id, 'Общага')
 
 
 async def ss(message: types.Message):
