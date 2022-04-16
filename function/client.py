@@ -19,8 +19,6 @@ def sql_start():
     global base, cur
 
 
-
-
 # приветствие
 async def greeting(message: types.Message):
     await bot.send_message(message.from_user.id, 'Привет, политехник! Команда Объединенного Студенческого Совета нашего\
@@ -59,35 +57,40 @@ async def process_name(message: types.Message, state: FSMContext):
     base.commit()
     base.close()
 
+
 async def lk(message: types.Message):
-    await bot.send_message(message.from_user.id, 'ЛК', reply_markup=lkkb_client)
-    keyboard = 1
+    await bot.send_message(message.from_user.id, 'Личный кабинет', reply_markup=lkkb_client)
+
 
 async def ob(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Общага', reply_markup=obkb_client)
-    keyboard = 2
-    await Form.name.set()
+    await bot.send_message(message.from_user.id, 'Общежитие', reply_markup=obkb_client)
+    # await Form.name.set()
 
 
 async def ss(message: types.Message):
     await bot.send_message(message.from_user.id, 'Студсовет', reply_markup=sskb_client)
-    keyboard = 3
+
 
 async def zv(message: types.Message):
-    await bot.send_message(message.from_user.id, 'ЗВ', reply_markup=zvkb_client)
-    keyboard = 4
+    await bot.send_message(message.from_user.id, 'Задать вопрос', reply_markup=zvkb_client)
 
 
 async def ka(message: types.Message):
-    await bot.send_message(message.from_user.id, 'КА')
+    await bot.send_message(message.from_user.id, 'Контакты', reply_markup=kb_client)
 
 
 async def enter_from_bd(message: types.Message):
     for i in cur.execute('SELECT * FROM ega').fetchall():
         await bot.send_message(message.from_user.id, f"dsa {i[0]} {i[1]}")
 
+
 async def back(message: types.Message):
-        await bot.send_message(message.from_user.id, 'Действие отменено',reply_markup=kb_client)
+    await bot.send_message(message.from_user.id, 'Назад', reply_markup=kb_client)
+
+
+async def plug(message: types.Message):
+    await bot.send_message(message.from_user.id, f'{message.text}', reply_markup=kb_client)
+
 
 def register_handlers_client(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(greeting, commands=['start'])
@@ -97,6 +100,14 @@ def register_handlers_client(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(zv, Text(equals='Задать вопросы'))
     dp.register_message_handler(ka, Text(equals='Контакты'))
     dp.register_message_handler(enter_from_bd, Text(equals='Регистрация'))
-    dp.register_message_handler(back, Text(equals='Отменить действие'))
+    dp.register_message_handler(back, Text(equals='Назад'))
+    #########
+    dp.register_message_handler(plug, Text(equals='Информация'))
+    dp.register_message_handler(plug, Text(equals='Мероприятия'))
+    dp.register_message_handler(plug, Text(equals='Задать вопрос'))
+    dp.register_message_handler(plug, Text(equals='Авторизация'))
+
+
+
 
 
