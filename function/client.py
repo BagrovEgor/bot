@@ -74,9 +74,12 @@ async def ss(message: types.Message):
 async def zv(message: types.Message):
     await bot.send_message(message.from_user.id, 'Задать вопрос', reply_markup=zvkb_client)
 
+async def zvo(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Отправьте свой вопрос по адресу: студсовет@mail.ru', reply_markup=zvkb_client)
 
 async def ka(message: types.Message):
     await bot.send_message(message.from_user.id, 'Контакты', reply_markup=kb_client)
+    await bot.send_message(message.from_user.id, 'Здесь вы позже увидите контакты администарции', reply_markup=ka_client)
 
 
 async def enter_from_bd(message: types.Message):
@@ -100,6 +103,9 @@ def register_handlers_client(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(zv, Text(equals='Задать вопросы'))
     dp.register_message_handler(ka, Text(equals='Контакты'))
     dp.register_message_handler(enter_from_bd, Text(equals='Регистрация'))
+    dp.register_message_handler(back, Text(equals='Отменить действие'))
+    dp.register_message_handler(zvo, Text(equals='Отправить'))
+    dp.register_message_handler(ka, Text(equals='Дублировать информацию'))
     dp.register_message_handler(back, Text(equals='Назад'))
     #########
     dp.register_message_handler(plug, Text(equals='Информация'))

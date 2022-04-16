@@ -33,6 +33,13 @@ zvkb2 = KeyboardButton(text='Назад')
 zvkb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 zvkb_client.add(zvkb1).add(zvkb2)
 
+# Контакты
+ka1 = KeyboardButton(text='Дублировать информацию')
+ka2 = KeyboardButton(text='Отменить действие')
+
+ka_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+ka_client.add(ka1).add(ka2)
+
 #общаги
 ob1 = KeyboardButton('№ 1')
 ob2 = KeyboardButton('№ 2')
