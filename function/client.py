@@ -65,7 +65,7 @@ async def lk(message: types.Message):
 
 async def ob(message: types.Message):
     await bot.send_message(message.from_user.id, 'Общежитие', reply_markup=obkb_client)
-    # await Form.name.set()
+    await Form.name.set()
 
 
 async def ss(message: types.Message):
