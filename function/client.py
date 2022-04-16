@@ -18,9 +18,6 @@ keyboard = 1
 def sql_start():
     global base, cur
 
-
-
-
 # приветствие
 async def greeting(message: types.Message):
     await bot.send_message(message.from_user.id, 'Привет, политехник! Команда Объединенного Студенческого Совета нашего\
@@ -83,7 +80,7 @@ async def ka(message: types.Message):
 
 
 async def enter_from_bd(message: types.Message):
-    for i in cur.execute('SELECT * FROM ega').fetchall():
+    for i in cur.execute('SELECT * FROM ega').fetchall():   #  fetchall(), вовзращается в виде кортежа 2 элемента
         await bot.send_message(message.from_user.id, f"dsa {i[0]} {i[1]}")
 
 async def back(message: types.Message):

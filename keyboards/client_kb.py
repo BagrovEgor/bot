@@ -1,4 +1,8 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
+import sqlite3 as sq
+from aiogram.dispatcher.filters import Text
+
+
 
 # команды
 kb1 = KeyboardButton('Личный кабинет')
@@ -35,6 +39,16 @@ zvkb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 zvkb_client.add(zvkb1).add(zvkb2)
 
 #общаги
+
+base = sq.connect('basa.db')
+cur = base.cursor()
+
+m = 0
+i = cur.execute('SELECT dorm FROM dorms').fetchall()
+print(i)
+
+
+'''
 ob1 = KeyboardButton('1')
 ob2 = KeyboardButton('2')
 ob3 = KeyboardButton('3')
@@ -60,8 +74,15 @@ ob22 = KeyboardButton('22-ая')
 ob23 = KeyboardButton('23-ая')
 ob24 = KeyboardButton('24-ая')
 ob25 = KeyboardButton('25-ая')
-
+obkb_client.add(ob1).insert(ob2).insert(ob4).add(ob5).insert(ob6).insert(ob7).add(ob8).insert(ob9).insert(ob10).add(ob11).insert(ob12).insert(ob13).add(ob14).insert(ob15).insert(ob16).add(ob17).insert(ob18).insert(ob19).add(ob20).insert(ob21).insert(ob22).add(ob23).insert(ob24).insert(ob25).add(kb6)
+'''
 
 obkb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+for j in range(25):
+    if j%3 == 0:
+        obkb_client.add(i[j][0])
+    else:
+        obkb_client.insert(i[j][0])
 
-obkb_client.add(ob1).insert(ob2).insert(ob4).add(ob5).insert(ob6).insert(ob7).add(ob8).insert(ob9).insert(ob10).add(ob11).insert(ob12).insert(ob13).add(ob14).insert(ob15).insert(ob16).add(ob17).insert(ob18).insert(ob19).add(ob20).insert(ob21).insert(ob22).add(ob23).insert(ob24).insert(ob25).add(kb6)
+obkb_client.add(kb6)
+
