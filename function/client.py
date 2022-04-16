@@ -5,6 +5,7 @@ from keyboards.client_kb import lkkb_client
 from keyboards.client_kb import obkb_client
 from keyboards.client_kb import sskb_client
 from keyboards.client_kb import zvkb_client
+from keyboards.client_kb import ka_client
 
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import State, StatesGroup
