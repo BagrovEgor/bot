@@ -78,12 +78,11 @@ async def zvo(message: types.Message):
     await bot.send_message(message.from_user.id, 'Отправьте свой вопрос по адресу: студсовет@mail.ru', reply_markup=zvkb_client)
 
 async def ka(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Контакты', reply_markup=kb_client)
     await bot.send_message(message.from_user.id, 'Здесь вы позже увидите контакты администарции', reply_markup=ka_client)
 
 
 async def enter_from_bd(message: types.Message):
-    for i in cur.execute('SELECT * FROM ega').fetchall():
+    for i in cur.execute('SELECT * FROM ega').fetchall():   #  fetchall(), вовзращается в виде кортежа 2 элемента
         await bot.send_message(message.from_user.id, f"dsa {i[0]} {i[1]}")
 
 
