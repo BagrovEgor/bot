@@ -48,10 +48,11 @@ async def process_name(message: types.Message, state: FSMContext):
 
     isreg = cur.execute(f'select dorm from dorms_of_users where user_id == {user};').fetchone()
 
+
     if (isreg == None):
         cur.execute(f'INSERT INTO main.dorms_of_users(user_id, dorm) VALUES ({user}, {dorm_id});')
     else:
-        cur.execute(f'UPDATE dorms_of_users SET dorm = {dorm_id} WHERE user_id == {user}')
+        cur.execute(f'UPDATE dorms_of_users SET dorm = {dorm_id} WHERE user_id = {user};')
 
     base.commit()
     base.close()
