@@ -26,13 +26,12 @@ async def greeting(message: types.Message):
 
 
 class Form(StatesGroup):
-    name = State()  # Will be represented in storage as 'Form:name'
+    name = State()  # Will be represented in storage as 'Form:name', state(), чтобы указать, что этот состояние
 
 
 @dp.message_handler(state=Form.name)
 async def process_name(message: types.Message, state: FSMContext):
-
-    async with state.proxy() as data:
+    async with state.proxy() as data:  # открыть словарь дата
         data['name'] = message.text
 
     await Form.next()
@@ -63,7 +62,7 @@ async def lk(message: types.Message):
 async def ob(message: types.Message):
     await bot.send_message(message.from_user.id, 'Общага', reply_markup=obkb_client)
     keyboard = 2
-    await Form.name.set()
+    await Form.name.set()  # Указываем метод
 
 
 async def ss(message: types.Message):
