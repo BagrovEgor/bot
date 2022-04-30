@@ -6,6 +6,7 @@ from keyboards.client_kb import obkb_client
 from keyboards.client_kb import sskb_client
 from keyboards.client_kb import zvkb_client
 from keyboards.client_kb import ka_client
+from keyboards.client_kb import infkb_client
 
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import State, StatesGroup
@@ -36,7 +37,7 @@ async def process_name(message: types.Message, state: FSMContext):
         data['name'] = message.text
 
     await Form.next()
-    await message.reply(f'Вы выбрали общежитие {message.text}')
+    await message.reply(f'Вы выбрали общежитие {message.text}', reply_markup=infkb_client)
     user = message.from_user.id
     print(user, message.text)
 
@@ -91,6 +92,17 @@ async def back(message: types.Message):
 async def plug(message: types.Message):
     await bot.send_message(message.from_user.id, f'{message.text}', reply_markup=kb_client)
 
+async def adm(message: types.Message):
+    base = sq.connect('basa.db')
+    cur = base.cursor()
+    user = message.from_user.id
+    dorm_id = cur.execute(f'select dorm from main.dorms_of_users where user_id == {user};').fetchone()
+    dorm_id = dorm_id[0]
+    i = cur.execute('SELECT * FROM info_dorms').fetchall()
+    await bot.send_message(message.from_user.id, f'{i[dorm_id - 1][0]}')
+    base.commit()
+    base.close()
+
 
 def register_handlers_client(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(greeting, commands=['start'])
@@ -109,8 +121,13 @@ def register_handlers_client(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(plug, Text(equals='Мероприятия'))
     dp.register_message_handler(plug, Text(equals='Задать вопрос'))
     dp.register_message_handler(plug, Text(equals='Авторизация'))
-
-
+    ##
+    dp.register_message_handler(adm, Text(equals='Администрация'))
+    dp.register_message_handler(plug, Text(equals='Адрес'))
+    dp.register_message_handler(plug, Text(equals='Мероприятия в общежитии'))
+    dp.register_message_handler(plug, Text(equals='Вконтакте'))
+    dp.register_message_handler(plug, Text(equals='Instagram'))
+    dp.register_message_handler(plug, Text(equals='Отменить действие'))
 
 
 
