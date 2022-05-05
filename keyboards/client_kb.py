@@ -3,8 +3,7 @@ import sqlite3 as sq
 from aiogram.dispatcher.filters import Text
 
 
-
-kb_back = KeyboardButton('Назад')
+kb_back = KeyboardButton('Отмена')
 
 # команды
 kb1 = KeyboardButton('Личный кабинет')
@@ -12,7 +11,6 @@ kb2 = KeyboardButton('Общежития')
 kb3 = KeyboardButton('Студенческий совет')
 kb4 = KeyboardButton('Задать вопросы')
 kb5 = KeyboardButton('Контакты')
-kb6 = KeyboardButton('Отменить действие')
 
 kb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)  # замещает клавиатуру
 kb_client.add(kb1).add(kb2).insert(kb3).add(kb4).insert(kb5).add(kb_back)
@@ -33,17 +31,15 @@ sskb_client.add(sskb1).add(sskb2).add(sskb3).add(kb_back)
 
 # Задать вопросы
 zvkb1 = KeyboardButton(text='Отправить')
-zvkb2 = KeyboardButton(text='Назад')
 
 zvkb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-zvkb_client.add(zvkb1).add(zvkb2)
+zvkb_client.add(zvkb1).add(kb_back)
 
 # Контакты
 ka1 = KeyboardButton(text='Дублировать информацию')
-ka2 = KeyboardButton(text='Отменить действие')
 
 ka_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-ka_client.add(ka1).add(ka2)
+ka_client.add(ka1).add(kb_back)
 
 #общаги
 
@@ -59,7 +55,7 @@ for j in range(25):
     else:
         obkb_client.insert(i[j][0])
 
-obkb_client.add(kb6)
+obkb_client.add(kb_back)
 base.close()
 
 # Инфа об общагах
@@ -68,7 +64,7 @@ inf_dorm2 = KeyboardButton(text='Адрес')
 inf_dorm3 = KeyboardButton(text='Мероприятия в общежитии')
 inf_dorm4 = KeyboardButton(text='Вконтакте')
 inf_dorm5 = KeyboardButton(text='Instagram')
-inf_dorm6 = KeyboardButton(text='Отменить действия')
+inf_dorm6 = KeyboardButton(text='Назад')
 
 infkb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 

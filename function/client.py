@@ -66,7 +66,7 @@ async def ob(message: types.Message):
     await bot.send_message(message.from_user.id, 'Общежитие', reply_markup=obkb_client)
     await Form.name.set()
 
-
+4
 async def ss(message: types.Message):
     await bot.send_message(message.from_user.id, 'Студсовет', reply_markup=sskb_client)
 
@@ -112,10 +112,9 @@ def register_handlers_client(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(zv, Text(equals='Задать вопросы'))
     dp.register_message_handler(ka, Text(equals='Контакты'))
     dp.register_message_handler(enter_from_bd, Text(equals='Регистрация'))
-    dp.register_message_handler(back, Text(equals='Отменить действие'))
     dp.register_message_handler(zvo, Text(equals='Отправить'))
     dp.register_message_handler(ka, Text(equals='Дублировать информацию'))
-    dp.register_message_handler(back, Text(equals='Назад'))
+    dp.register_message_handler(back, Text(equals='Отмена'))
     #########
     dp.register_message_handler(plug, Text(equals='Информация'))
     dp.register_message_handler(plug, Text(equals='Мероприятия'))
@@ -127,7 +126,7 @@ def register_handlers_client(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(plug, Text(equals='Мероприятия в общежитии'))
     dp.register_message_handler(plug, Text(equals='Вконтакте'))
     dp.register_message_handler(plug, Text(equals='Instagram'))
-    dp.register_message_handler(plug, Text(equals='Отменить действие'))
+    dp.register_message_handler(plug, Text(equals='Назад'))
 
 
 
