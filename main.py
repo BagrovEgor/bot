@@ -10,7 +10,6 @@ from dop import dp
 from function import client, other
 from keyboards import client_kb
 
-client.sql_start()
 client.register_handlers_client(dp)
 other.register_handlers_other(dp)
 
