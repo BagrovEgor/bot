@@ -66,7 +66,7 @@ async def ob(message: types.Message):
     await bot.send_message(message.from_user.id, 'Общежитие', reply_markup=obkb_client)
     await Form.name.set()
 
-4
+
 async def ss(message: types.Message):
     await bot.send_message(message.from_user.id, 'Студсовет', reply_markup=sskb_client)
 
@@ -78,7 +78,14 @@ async def zvo(message: types.Message):
     await bot.send_message(message.from_user.id, 'Отправьте свой вопрос по адресу: студсовет@mail.ru', reply_markup=zvkb_client)
 
 async def ka(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Здесь вы позже увидите контакты администарции', reply_markup=ka_client)
+    base = sq.connect('basa.db')
+    cur = base.cursor()
+
+    i = cur.execute('SELECT inf FROM contact_inf').fetchone()
+    i = i[0]
+    base.commit()
+    base.close()
+    await bot.send_message(message.from_user.id, i, reply_markup=ka_client)
 
 
 async def enter_from_bd(message: types.Message):
@@ -103,6 +110,48 @@ async def adm(message: types.Message):
     base.commit()
     base.close()
 
+async def address (message: types.Message):
+    base = sq.connect('basa.db')
+    cur = base.cursor()
+    user = message.from_user.id
+    dorm_id = cur.execute(f'select dorm from main.dorms_of_users where user_id == {user};').fetchone()
+    dorm_id = dorm_id[0]
+    i = cur.execute('SELECT * FROM info_dorms').fetchall()
+    await bot.send_message(message.from_user.id, f'{i[dorm_id - 1][1]}')
+    base.commit()
+    base.close()
+
+async def events (message: types.Message):
+    base = sq.connect('basa.db')
+    cur = base.cursor()
+    user = message.from_user.id
+    dorm_id = cur.execute(f'select dorm from main.dorms_of_users where user_id == {user};').fetchone()
+    dorm_id = dorm_id[0]
+    i = cur.execute('SELECT * FROM info_dorms').fetchall()
+    await bot.send_message(message.from_user.id, f'{i[dorm_id - 1][2]}')
+    base.commit()
+    base.close()
+async def VK (message: types.Message):
+    base = sq.connect('basa.db')
+    cur = base.cursor()
+    user = message.from_user.id
+    dorm_id = cur.execute(f'select dorm from main.dorms_of_users where user_id == {user};').fetchone()
+    dorm_id = dorm_id[0]
+    i = cur.execute('SELECT * FROM info_dorms').fetchall()
+    await bot.send_message(message.from_user.id, f'{i[dorm_id - 1][3]}')
+    base.commit()
+    base.close()
+
+async def inst (message: types.Message):
+    base = sq.connect('basa.db')
+    cur = base.cursor()
+    user = message.from_user.id
+    dorm_id = cur.execute(f'select dorm from main.dorms_of_users where user_id == {user};').fetchone()
+    dorm_id = dorm_id[0]
+    i = cur.execute('SELECT * FROM info_dorms').fetchall()
+    await bot.send_message(message.from_user.id, f'{i[dorm_id - 1][4]}')
+    base.commit()
+    base.close()
 
 def register_handlers_client(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(greeting, commands=['start'])
@@ -114,7 +163,7 @@ def register_handlers_client(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(enter_from_bd, Text(equals='Регистрация'))
     dp.register_message_handler(zvo, Text(equals='Отправить'))
     dp.register_message_handler(ka, Text(equals='Дублировать информацию'))
-    dp.register_message_handler(back, Text(equals='Отмена'))
+    dp.register_message_handler(back, Text(equals='Назад'))
     #########
     dp.register_message_handler(plug, Text(equals='Информация'))
     dp.register_message_handler(plug, Text(equals='Мероприятия'))
@@ -122,11 +171,11 @@ def register_handlers_client(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(plug, Text(equals='Авторизация'))
     ##
     dp.register_message_handler(adm, Text(equals='Администрация'))
-    dp.register_message_handler(plug, Text(equals='Адрес'))
-    dp.register_message_handler(plug, Text(equals='Мероприятия в общежитии'))
-    dp.register_message_handler(plug, Text(equals='Вконтакте'))
-    dp.register_message_handler(plug, Text(equals='Instagram'))
-    dp.register_message_handler(plug, Text(equals='Назад'))
+    dp.register_message_handler(address, Text(equals='Адрес'))
+    dp.register_message_handler(events, Text(equals='Мероприятия в общежитии'))
+    dp.register_message_handler(VK, Text(equals='Вконтакте'))
+    dp.register_message_handler(inst, Text(equals='Instagram'))
+    dp.register_message_handler(ob, Text(equals='Вернуться'))
 
 
 

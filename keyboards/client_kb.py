@@ -3,7 +3,8 @@ import sqlite3 as sq
 from aiogram.dispatcher.filters import Text
 
 
-kb_back = KeyboardButton('Отмена')
+
+kb_back = KeyboardButton('Назад')
 
 # команды
 kb1 = KeyboardButton('Личный кабинет')
@@ -12,8 +13,9 @@ kb3 = KeyboardButton('Студенческий совет')
 kb4 = KeyboardButton('Задать вопросы')
 kb5 = KeyboardButton('Контакты')
 
+
 kb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)  # замещает клавиатуру
-kb_client.add(kb1).add(kb2).insert(kb3).add(kb4).insert(kb5).add(kb_back)
+kb_client.add(kb1).add(kb2).insert(kb3).add(kb4).insert(kb5)
 
 # Личный кабинет
 lkkb1 = KeyboardButton(text='Авторизация')
@@ -64,7 +66,7 @@ inf_dorm2 = KeyboardButton(text='Адрес')
 inf_dorm3 = KeyboardButton(text='Мероприятия в общежитии')
 inf_dorm4 = KeyboardButton(text='Вконтакте')
 inf_dorm5 = KeyboardButton(text='Instagram')
-inf_dorm6 = KeyboardButton(text='Назад')
+inf_dorm6 = KeyboardButton(text='Вернуться')
 
 infkb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 
