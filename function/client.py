@@ -5,8 +5,6 @@ from keyboards.client_kb import lkkb_client
 from keyboards.client_kb import obkb_client
 from keyboards.client_kb import sskb_client
 from keyboards.client_kb import zvkb_client
-from keyboards.client_kb import ka_client
-from keyboards.client_kb import infkb_client
 from keyboards.client_kb import usekb_client
 
 from aiogram.dispatcher.filters import Text
@@ -27,35 +25,72 @@ class Form(StatesGroup):
     name = State()  # Will be represented in storage as 'Form:name', state(), чтобы указать, что этот состояние
 
 
+dorm_names = ['0', '1', '3', '4', '4а', '5', '6', '7', '8', '10', '11', '12', '13', '14a', '14б', '14ц', '15',
+              '16', '17', '18', '18', '19', '20']
+
+
 @dp.message_handler(state=Form.name)
 async def process_name(message: types.Message, state: FSMContext):
+    print('ok')
     async with state.proxy() as data:  # открыть словарь дата
-        data['name'] = message.text
+        if message.text != 'Назад':
+            data['name'] = dorm_names.index(message.text)
+            dorm_num = data['name']
 
     await Form.next()
-    if (message.text != 'Назад'):
-        await message.reply(f'Вы выбрали общежитие {message.text}', reply_markup=infkb_client)
-        user = message.from_user.id
-        print(user, message.text)
-
-        # добавление нового или обновление старого
+    if message.text != 'Назад':
         base = sq.connect('basa.db')
         cur = base.cursor()
-        dorm_id = cur.execute(f'select id from main.dorms where dorm == {message.text};').fetchone()
+        user = message.from_user.id
+        print(user)
+        '''
+        dorm_id = cur.execute(f'select dorm from main.dorms_of_users where user_id == {user};').fetchone()
+        dorm_id = dorm_id[0]
+        '''
+        i = cur.execute('SELECT * FROM info_dorms').fetchall()
+
+        if dorm_num == 3:
+            await bot.send_message(message.from_user.id,
+                                   f'Общежитие №{message.text}\n\n'
+                                   f'Адрес: {i[dorm_num - 1][1]}\n\n'
+                                   f'Заведующая: {i[dorm_num - 1][2]}\n\n'
+                                   f'Администратор: {i[dorm_num - 1][3]}\n\n'
+                                   f'Почта: {i[dorm_num - 1][4]}\n\n'
+                                   f'Группа ВК: {i[dorm_num - 1][5]}\n\n',
+                                   reply_markup=obkb_client)
+        else:
+            await bot.send_message(message.from_user.id,
+                                   f"Общежитие №{message.text}*\n\n"
+                                   f"Адрес: {i[dorm_num - 1][1]}\n\n"
+                                   f"Заведующая: {i[dorm_num - 1][2]}\n\n"
+                                   f"Почта: {i[dorm_num - 1][4]}\n\n"
+                                   f"Группа ВК: {i[dorm_num - 1][5]}\n\n",
+                                   reply_markup=obkb_client)
+        # await bot.send_message(message.from_user.id, f"*yyy*",
+                                   # reply_markup=obkb_client, parse_mode="Markdown")
+
+        '''
+        # добавление нового или обновление старого
+        dorm_id = cur.execute(f'select id from main.dorms where dorm == {dorm_num};').fetchone()
         dorm_id = dorm_id[0]
 
         isreg = cur.execute(f'select dorm from dorms_of_users where user_id == {user};').fetchone()
-
 
         if (isreg == None):
             cur.execute(f'INSERT INTO main.dorms_of_users(user_id, dorm) VALUES ({user}, {dorm_id});')
         else:
             cur.execute(f'UPDATE dorms_of_users SET dorm = {dorm_id} WHERE user_id = {user};')
+        '''
 
         base.commit()
         base.close()
+
+        await Form.name.set()
+
     else:
         await message.reply('Дейтсвие выполнено', reply_markup=kb_client)
+
+
 
 
 async def lk(message: types.Message):
@@ -100,6 +135,7 @@ async def сenter_settlement(message: types.Message):
     base.close()
     await bot.send_message(message.from_user.id, f'Информация о центре поселения:\n{i[1][0]} \n\n{i[1][1]} \n{i[1][2]}', reply_markup=usekb_client)
 
+
 async def passport(message: types.Message):
     base = sq.connect('basa.db')
     cur = base.cursor()
@@ -116,62 +152,6 @@ async def back(message: types.Message):
 
 async def plug(message: types.Message):
     await bot.send_message(message.from_user.id, 'https://vk.com/studg', reply_markup=sskb_client)
-
-async def adm(message: types.Message):
-    base = sq.connect('basa.db')
-    cur = base.cursor()
-    user = message.from_user.id
-    dorm_id = cur.execute(f'select dorm from main.dorms_of_users where user_id == {user};').fetchone()
-    dorm_id = dorm_id[0]
-    i = cur.execute('SELECT * FROM info_dorms').fetchall()
-    await bot.send_message(message.from_user.id, f'{i[dorm_id - 1][0]}')
-    base.commit()
-    base.close()
-
-async def address (message: types.Message):
-    base = sq.connect('basa.db')
-    cur = base.cursor()
-    user = message.from_user.id
-    dorm_id = cur.execute(f'select dorm from main.dorms_of_users where user_id == {user};').fetchone()
-    dorm_id = dorm_id[0]
-    i = cur.execute('SELECT * FROM info_dorms').fetchall()
-    await bot.send_message(message.from_user.id, f'{i[dorm_id - 1][1]}')
-    base.commit()
-    base.close()
-
-async def events (message: types.Message):
-    base = sq.connect('basa.db')
-    cur = base.cursor()
-    user = message.from_user.id
-    dorm_id = cur.execute(f'select dorm from main.dorms_of_users where user_id == {user};').fetchone()
-    dorm_id = dorm_id[0]
-    i = cur.execute('SELECT * FROM info_dorms').fetchall()
-    await bot.send_message(message.from_user.id, f'{i[dorm_id - 1][2]}')
-    base.commit()
-    base.close()
-
-
-async def VK (message: types.Message):
-    base = sq.connect('basa.db')
-    cur = base.cursor()
-    user = message.from_user.id
-    dorm_id = cur.execute(f'select dorm from main.dorms_of_users where user_id == {user};').fetchone()
-    dorm_id = dorm_id[0]
-    i = cur.execute('SELECT * FROM info_dorms').fetchall()
-    await bot.send_message(message.from_user.id, f'{i[dorm_id - 1][3]}')
-    base.commit()
-    base.close()
-
-async def inst (message: types.Message):
-    base = sq.connect('basa.db')
-    cur = base.cursor()
-    user = message.from_user.id
-    dorm_id = cur.execute(f'select dorm from main.dorms_of_users where user_id == {user};').fetchone()
-    dorm_id = dorm_id[0]
-    i = cur.execute('SELECT * FROM info_dorms').fetchall()
-    await bot.send_message(message.from_user.id, f'{i[dorm_id - 1][4]}')
-    base.commit()
-    base.close()
 
 async def info_SC(message: types.Message):
     await bot.send_message(message.from_user.id, 'ОСС – это орган студенческого самоуправления в Студенческом городке СПбПУ. '
@@ -207,13 +187,7 @@ def register_handlers_client(dp: Dispatcher):  # аннотация типов
     ######### СС
     dp.register_message_handler(info_SC, Text(equals='Кто мы?'))
     dp.register_message_handler(plug, Text(equals='Группа ВК'))
-    ##Общежития
-    dp.register_message_handler(adm, Text(equals='Администрация'))
-    dp.register_message_handler(address, Text(equals='Адрес'))
-    dp.register_message_handler(events, Text(equals='Мероприятия в общежитии'))
-    dp.register_message_handler(VK, Text(equals='Вконтакте'))
-    dp.register_message_handler(inst, Text(equals='Instagram'))
-    dp.register_message_handler(ob, Text(equals='Вернуться'))
+
     #ЗВ
     dp.register_message_handler(applicants, Text(equals='Абитуриентам'))
     dp.register_message_handler(students, Text(equals='Студентам'))
