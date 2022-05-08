@@ -31,7 +31,7 @@ dorm_names = ['0', '1', '3', '4', '4а', '5', '6', '7', '8', '10', '11', '12', '
 
 @dp.message_handler(state=Form.name)
 async def process_name(message: types.Message, state: FSMContext):
-    print('ok')
+    # print('ok')
     async with state.proxy() as data:  # открыть словарь дата
         if message.text != 'Назад':
             data['name'] = dorm_names.index(message.text)
@@ -42,11 +42,7 @@ async def process_name(message: types.Message, state: FSMContext):
         base = sq.connect('basa.db')
         cur = base.cursor()
         user = message.from_user.id
-        print(user)
-        '''
-        dorm_id = cur.execute(f'select dorm from main.dorms_of_users where user_id == {user};').fetchone()
-        dorm_id = dorm_id[0]
-        '''
+        # print(user)
         i = cur.execute('SELECT * FROM info_dorms').fetchall()
 
         if dorm_num == 3:
@@ -69,19 +65,6 @@ async def process_name(message: types.Message, state: FSMContext):
         await bot.send_location(message.from_user.id, i[dorm_num - 1][6], i[dorm_num - 1][7])
         # await bot.send_message(message.from_user.id, f"*yyy*",
                                    # reply_markup=obkb_client, parse_mode="Markdown")
-
-        '''
-        # добавление нового или обновление старого
-        dorm_id = cur.execute(f'select id from main.dorms where dorm == {dorm_num};').fetchone()
-        dorm_id = dorm_id[0]
-
-        isreg = cur.execute(f'select dorm from dorms_of_users where user_id == {user};').fetchone()
-
-        if (isreg == None):
-            cur.execute(f'INSERT INTO main.dorms_of_users(user_id, dorm) VALUES ({user}, {dorm_id});')
-        else:
-            cur.execute(f'UPDATE dorms_of_users SET dorm = {dorm_id} WHERE user_id = {user};')
-        '''
 
         base.commit()
         base.close()
@@ -161,17 +144,20 @@ async def info_SC(message: types.Message):
                                                  'Председатель: Перец Алина', reply_markup=sskb_client)
 
 async def applicants(message: types.Message):
-    await message.reply('Абитуриентам', reply_markup=zvkb_client)
+    await message.reply('В разработке...', reply_markup=zvkb_client)
 
 
 async def students(message: types.Message):
-    await message.reply('Студентам', reply_markup=zvkb_client)
+    await message.reply('В разработке...', reply_markup=zvkb_client)
 
 
 async def NoQ(message: types.Message):
     await bot.send_message(message.from_user.id,'Обратиться к Администрации СТГ: '
                                                 'Обратиться в Студенческий совет: https://vk.com/studg', reply_markup=zvkb_client)
 
+
+async def auth(message: types.Message):
+    await message.reply('В разработке...', reply_markup=kb_client)
 
 
 def register_handlers_client(dp: Dispatcher):  # аннотация типов
@@ -197,6 +183,9 @@ def register_handlers_client(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(adm_sc, Text(equals='Администрация СТГ'))
     dp.register_message_handler(сenter_settlement, Text(equals='Центр поселения'))
     dp.register_message_handler(passport, Text(equals='Паспортный стол'))
+
+    dp.register_message_handler(auth, Text(equals='Авторизация'))
+
 
 
 
