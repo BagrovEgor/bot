@@ -25,7 +25,7 @@ class Form(StatesGroup):
     name = State()  # Will be represented in storage as 'Form:name', state(), чтобы указать, что этот состояние
 
 
-dorm_names = ['0', '1', '3', '4', '4а', '5', '6', '7', '8', '10', '11', '12', '13', '14a', '14б', '14ц', '15',
+dorm_names = ['0', '1', '3', '4', '4а', '5', '6', '7', '8', '10', '11', '12', '13', '14а', '14б', '14ц', '15',
               '16', '17', '18', '18', '19', '20']
 
 
@@ -60,7 +60,7 @@ async def process_name(message: types.Message, state: FSMContext):
                                    reply_markup=obkb_client)
         else:
             await bot.send_message(message.from_user.id,
-                                   f"Общежитие №{message.text}*\n\n"
+                                   f"Общежитие №{message.text}\n\n"
                                    f"Адрес: {i[dorm_num - 1][1]}\n\n"
                                    f"Заведующая: {i[dorm_num - 1][2]}\n\n"
                                    f"Почта: {i[dorm_num - 1][4]}\n\n"
