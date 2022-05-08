@@ -11,7 +11,7 @@ from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher import FSMContext
 
-
+import tracemalloc
 import sqlite3 as sq
 
 # приветствие
@@ -66,6 +66,7 @@ async def process_name(message: types.Message, state: FSMContext):
                                    f"Почта: {i[dorm_num - 1][4]}\n\n"
                                    f"Группа ВК: {i[dorm_num - 1][5]}\n\n",
                                    reply_markup=obkb_client)
+        await bot.send_location(message.from_user.id, i[dorm_num - 1][6], i[dorm_num - 1][7])
         # await bot.send_message(message.from_user.id, f"*yyy*",
                                    # reply_markup=obkb_client, parse_mode="Markdown")
 
