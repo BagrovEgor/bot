@@ -7,7 +7,6 @@
 from aiogram.utils import executor
 from dop import dp
 
-
 from function import client, other
 from keyboards import client_kb
 
