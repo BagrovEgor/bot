@@ -6,14 +6,14 @@ from aiogram.dispatcher.filters import Text
 kb_back = KeyboardButton('Назад')
 
 # команды
-#kb1 = KeyboardButton('Личный кабинет')
+# kb1 = KeyboardButton('Личный кабинет')
 kb2 = KeyboardButton('Общежития')
 kb3 = KeyboardButton('Студенческий совет')
 kb4 = KeyboardButton('Задать вопрос')
 kb5 = KeyboardButton('Полезное')
 
 
-kb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False )  # замещает клавиатуру
+kb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False6)  # замещает клавиатуру
 kb_client.add(kb2).insert(kb3).add(kb4).insert(kb5)#.add(kb1)
 
 # Личный кабинет

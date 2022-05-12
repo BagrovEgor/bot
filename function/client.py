@@ -216,9 +216,10 @@ async def NoQ(message: types.Message):
                                                  'Обратиться в Студенческий совет: https://vk.com/studg',
                            reply_markup=zvkb_client)
 
-
+'''
 async def auth(message: types.Message):
     await message.reply('В разработке...', reply_markup=kb_client)
+'''
 
 
 def register_handlers_client(dp: Dispatcher):  # аннотация типов
@@ -256,4 +257,4 @@ def register_handlers_client(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(center_settlement, Text(equals='Центр поселения'))
     dp.register_message_handler(passport, Text(equals='Паспортный стол'))
 
-    dp.register_message_handler(auth, Text(equals='Авторизация'))
+    # dp.register_message_handler(auth, Text(equals='Авторизация'))
