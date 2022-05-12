@@ -6,21 +6,21 @@ from aiogram.dispatcher.filters import Text
 kb_back = KeyboardButton('Назад')
 
 # команды
-kb1 = KeyboardButton('Личный кабинет')
+# kb1 = KeyboardButton('Личный кабинет')
 kb2 = KeyboardButton('Общежития')
 kb3 = KeyboardButton('Студенческий совет')
 kb4 = KeyboardButton('Задать вопрос')
 kb5 = KeyboardButton('Полезное')
 
 
-kb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False )  # замещает клавиатуру
-kb_client.add(kb1).add(kb2).insert(kb3).add(kb4).insert(kb5)
+kb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False6)  # замещает клавиатуру
+kb_client.add(kb2).insert(kb3).add(kb4).insert(kb5)#.add(kb1)
 
 # Личный кабинет
-lkkb1 = KeyboardButton(text='Авторизация')
+'''lkkb1 = KeyboardButton(text='Авторизация')
 
 lkkb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
-lkkb_client.add(lkkb1).add(kb_back)
+lkkb_client.add(kb_back)#.add(lkkb1)'''
 
 # Студенческий совет
 sskb1 = KeyboardButton(text='Кто мы?')
@@ -30,7 +30,7 @@ sskb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
 sskb_client.add(sskb1).add(sskb2).add(kb_back)
 
 # Задать вопросы
-zvkb1 = KeyboardButton(text='Абитуриентам')
+zvkb1 = KeyboardButton(text='Проживающим')
 zvkb2 = KeyboardButton(text='Студентам')
 zvkb3 = KeyboardButton(text='Нет ответа?')
 
@@ -42,6 +42,21 @@ ka1 = KeyboardButton(text='Дублировать информацию')
 
 ka_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
 ka_client.add(ka1).add(kb_back)
+
+# вопросы
+liverskb1 = KeyboardButton(text='Как происходит оплата за проживание?')
+liverskb2 = KeyboardButton(text='Сколько стоит проживание в общежитии?')
+liverskb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
+liverskb_client.add(liverskb1).add(liverskb2).add(kb_back)
+
+studentskb1 = KeyboardButton(text='Кто может получить общежитие?')
+studentskb2 = KeyboardButton(text='Какие общежития есть в СПбПУ?')
+studentskb3 = KeyboardButton(text='Какое общежитие мне дадут?')
+studentskb4 = KeyboardButton(text='Сколькo стоит проживание в общежитии?')
+studentskb5 = KeyboardButton(text='Как прoисходит оплата за проживание?')
+studentskb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
+studentskb_client.add(studentskb1).add(studentskb2).add(studentskb3).add(studentskb4).add(studentskb5).add(kb_back)
+
 
 #общаги
 
