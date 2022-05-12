@@ -1,7 +1,7 @@
 from aiogram import types, Dispatcher
 from dop import dp, bot
 from keyboards.client_kb import kb_client
-from keyboards.client_kb import lkkb_client
+#from keyboards.client_kb import lkkb_client
 from keyboards.client_kb import obkb_client
 from keyboards.client_kb import sskb_client
 from keyboards.client_kb import zvkb_client
@@ -78,8 +78,8 @@ async def process_name(message: types.Message, state: FSMContext):
         await message.reply('Дейтсвие выполнено', reply_markup=kb_client)
 
 
-async def lk(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Вы выбрали раздел: Личный кабинет', reply_markup=lkkb_client)
+'''async def lk(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Вы выбрали раздел: Личный кабинет', reply_markup=lkkb_client)'''
 
 
 async def ob(message: types.Message):
@@ -224,7 +224,7 @@ async def auth(message: types.Message):
 def register_handlers_client(dp: Dispatcher):  # аннотация типов
     ## Главное меню
     dp.register_message_handler(greeting, commands=['start'])
-    dp.register_message_handler(lk, Text(equals='Личный кабинет'))
+    #dp.register_message_handler(lk, Text(equals='Личный кабинет'))
     dp.register_message_handler(ob, Text(equals='Общежития'))
     dp.register_message_handler(ss, Text(equals='Студенческий совет'))
     dp.register_message_handler(zv, Text(equals='Задать вопрос'))
