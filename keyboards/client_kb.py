@@ -6,7 +6,7 @@ from aiogram.dispatcher.filters import Text
 kb_back = KeyboardButton('Назад')
 
 # команды
-kb1 = KeyboardButton('Личный кабинет')
+#kb1 = KeyboardButton('Личный кабинет')
 kb2 = KeyboardButton('Общежития')
 kb3 = KeyboardButton('Студенческий совет')
 kb4 = KeyboardButton('Задать вопрос')
@@ -14,13 +14,13 @@ kb5 = KeyboardButton('Полезное')
 
 
 kb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False )  # замещает клавиатуру
-kb_client.add(kb1).add(kb2).insert(kb3).add(kb4).insert(kb5)
+kb_client.add(kb2).insert(kb3).add(kb4).insert(kb5)#.add(kb1)
 
 # Личный кабинет
-lkkb1 = KeyboardButton(text='Авторизация')
+'''lkkb1 = KeyboardButton(text='Авторизация')
 
 lkkb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
-lkkb_client.add(lkkb1).add(kb_back)
+lkkb_client.add(kb_back)#.add(lkkb1)'''
 
 # Студенческий совет
 sskb1 = KeyboardButton(text='Кто мы?')
