@@ -12,7 +12,6 @@ from keyboards.client_kb import studentskb_client
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher import FSMContext
-
 import sqlite3 as sq
 
 
@@ -28,7 +27,7 @@ class Form(StatesGroup):
 
 
 dorm_names = ['0', '1', '3', '4', '4а', '5', '6', '7', '8', '10', '11', '12', '13', '14а', '14б', '14ц', '15',
-              '16', '17', '18', '18', '19', '20']
+              '16', '17', '18', '19', '20']
 
 
 @dp.message_handler(state=Form.name)
@@ -46,7 +45,7 @@ async def process_name(message: types.Message, state: FSMContext):
         # user = message.from_user.id
         # print(user)
         i = cur.execute('SELECT * FROM info_dorms').fetchall()
-
+        print(dorm_num)
         if dorm_num == 3:
             await bot.send_message(message.from_user.id,
                                    f'Общежитие №{message.text}\n\n'
@@ -76,9 +75,10 @@ async def process_name(message: types.Message, state: FSMContext):
     else:
         await message.reply('Действие выполнено', reply_markup=kb_client)
 
-
-'''async def lk(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Вы выбрали раздел: Личный кабинет', reply_markup=lkkb_client)'''
+'''
+async def lk(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Вы выбрали раздел: Личный кабинет', reply_markup=lkkb_client)
+'''
 
 
 async def ob(message: types.Message):

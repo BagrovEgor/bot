@@ -1,4 +1,4 @@
-from dop import dp, bot
+from dop import bot
 from aiogram import Dispatcher, types
 
 
@@ -8,6 +8,7 @@ from aiogram import Dispatcher, types
 async def echo_send(message: types.Message):  # async чтобы не простаивало свободное время
     if message.text == 'привет':
         await bot.send_message(message.from_user.id, 'Привет')
+
 
 def register_handlers_other(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(echo_send)

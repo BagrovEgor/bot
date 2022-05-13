@@ -14,10 +14,11 @@ kb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)  
 kb_client.add(kb2).insert(kb3).add(kb4).insert(kb5)  # .add(kb1)
 
 # Личный кабинет
-'''lkkb1 = KeyboardButton(text='Авторизация')
-
+'''
+lkkb1 = KeyboardButton(text='Авторизация')
 lkkb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
-lkkb_client.add(kb_back)#.add(lkkb1)'''
+lkkb_client.add(kb_back)#.add(lkkb1)
+'''
 
 # Студенческий совет
 sskb1 = KeyboardButton(text='Кто мы?')
@@ -62,7 +63,7 @@ cur = base.cursor()
 i = cur.execute('SELECT dorm FROM dorms').fetchall()
 
 obkb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
-for j in range(20):
+for j in range(21):
     if j % 3 == 0:
         obkb_client.add(i[j][0])
     else:
