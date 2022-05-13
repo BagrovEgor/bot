@@ -1,6 +1,5 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 import sqlite3 as sq
-from aiogram.dispatcher.filters import Text
 
 kb_back = KeyboardButton('Назад')
 

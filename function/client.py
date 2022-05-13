@@ -1,7 +1,7 @@
 from aiogram import types, Dispatcher
 from dop import dp, bot
 from keyboards.client_kb import kb_client
-#from keyboards.client_kb import lkkb_client
+# from keyboards.client_kb import lkkb_client
 from keyboards.client_kb import obkb_client
 from keyboards.client_kb import sskb_client
 from keyboards.client_kb import zvkb_client
@@ -13,7 +13,6 @@ from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher import FSMContext
 
-import tracemalloc
 import sqlite3 as sq
 
 
@@ -44,7 +43,7 @@ async def process_name(message: types.Message, state: FSMContext):
     if message.text != 'Назад':
         base = sq.connect('basa.db')
         cur = base.cursor()
-        user = message.from_user.id
+        # user = message.from_user.id
         # print(user)
         i = cur.execute('SELECT * FROM info_dorms').fetchall()
 
@@ -154,7 +153,8 @@ async def plug(message: types.Message):
 async def info_SC(message: types.Message):
     await bot.send_message(message.from_user.id,
                            'ОСС – это орган студенческого самоуправления в Студенческом городке СПбПУ. '
-                           'Мы защищаем права и интересы студентов перед администрацией. Наша основная задача - улучшение качества жизни в Студгородке. '
+                           'Мы защищаем права и интересы студентов перед администрацией. Наша основная задача - '
+                           'улучшение качества жизни в Студгородке. '
                            'Также мы занимаемся организацией мероприятий в общежитиях и университете.\n\n'
                            'Председатель: Перец Алина', reply_markup=sskb_client)
 
@@ -223,9 +223,9 @@ async def auth(message: types.Message):
 
 
 def register_handlers_client(dp: Dispatcher):  # аннотация типов
-    ## Главное меню
+    # Главное меню
     dp.register_message_handler(greeting, commands=['start'])
-    #dp.register_message_handler(lk, Text(equals='Личный кабинет'))
+    # dp.register_message_handler(lk, Text(equals='Личный кабинет'))
     dp.register_message_handler(ob, Text(equals='Общежития'))
     dp.register_message_handler(ss, Text(equals='Студенческий совет'))
     dp.register_message_handler(zv, Text(equals='Задать вопрос'))
@@ -233,7 +233,7 @@ def register_handlers_client(dp: Dispatcher):  # аннотация типов
 
     dp.register_message_handler(useful, Text(equals='Полезное'))
     dp.register_message_handler(back, Text(equals='Назад'))
-    ######### СС
+    # СС
     dp.register_message_handler(info_SC, Text(equals='Кто мы?'))
     dp.register_message_handler(plug, Text(equals='Группа ВК'))
 
@@ -252,7 +252,7 @@ def register_handlers_client(dp: Dispatcher):  # аннотация типов
     dp.register_message_handler(students_ans4, Text(equals='Сколькo стоит проживание в общежитии?'))
     dp.register_message_handler(students_ans5, Text(equals='Как прoисходит оплата за проживание?'))
 
-    ## Полезное
+    # Полезное
     dp.register_message_handler(adm_sc, Text(equals='Администрация СТГ'))
     dp.register_message_handler(center_settlement, Text(equals='Центр поселения'))
     dp.register_message_handler(passport, Text(equals='Паспортный стол'))
