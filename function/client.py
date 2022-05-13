@@ -74,7 +74,7 @@ async def process_name(message: types.Message, state: FSMContext):
         await Form.name.set()
 
     else:
-        await message.reply('Дейтсвие выполнено', reply_markup=kb_client)
+        await message.reply('Действие выполнено', reply_markup=kb_client)
 
 
 '''async def lk(message: types.Message):
@@ -222,39 +222,39 @@ async def auth(message: types.Message):
 '''
 
 
-def register_handlers_client(dp: Dispatcher):  # аннотация типов
+def register_handlers_client(disp: Dispatcher):  # аннотация типов
     # Главное меню
-    dp.register_message_handler(greeting, commands=['start'])
+    disp.register_message_handler(greeting, commands=['start'])
     # dp.register_message_handler(lk, Text(equals='Личный кабинет'))
-    dp.register_message_handler(ob, Text(equals='Общежития'))
-    dp.register_message_handler(ss, Text(equals='Студенческий совет'))
-    dp.register_message_handler(zv, Text(equals='Задать вопрос'))
-    dp.register_message_handler(useful, Text(equals='Полезное'))
+    disp.register_message_handler(ob, Text(equals='Общежития'))
+    disp.register_message_handler(ss, Text(equals='Студенческий совет'))
+    disp.register_message_handler(zv, Text(equals='Задать вопрос'))
+    disp.register_message_handler(useful, Text(equals='Полезное'))
 
-    dp.register_message_handler(useful, Text(equals='Полезное'))
-    dp.register_message_handler(back, Text(equals='Назад'))
+    disp.register_message_handler(useful, Text(equals='Полезное'))
+    disp.register_message_handler(back, Text(equals='Назад'))
     # СС
-    dp.register_message_handler(info_SC, Text(equals='Кто мы?'))
-    dp.register_message_handler(plug, Text(equals='Группа ВК'))
+    disp.register_message_handler(info_SC, Text(equals='Кто мы?'))
+    disp.register_message_handler(plug, Text(equals='Группа ВК'))
 
     # ЗВ
-    dp.register_message_handler(livers, Text(equals='Проживающим'))
-    dp.register_message_handler(students, Text(equals='Абитуриентам'))
-    dp.register_message_handler(NoQ, Text(equals='Нет ответа?'))
+    disp.register_message_handler(livers, Text(equals='Проживающим'))
+    disp.register_message_handler(students, Text(equals='Абитуриентам'))
+    disp.register_message_handler(NoQ, Text(equals='Нет ответа?'))
 
     # Вопросы
-    dp.register_message_handler(livers_ans1, Text(equals='Как происходит оплата за проживание?'))
-    dp.register_message_handler(livers_ans2, Text(equals='Сколько стоит проживание в общежитии?'))
+    disp.register_message_handler(livers_ans1, Text(equals='Как происходит оплата за проживание?'))
+    disp.register_message_handler(livers_ans2, Text(equals='Сколько стоит проживание в общежитии?'))
 
-    dp.register_message_handler(students_ans1, Text(equals='Кто может получить общежитие?'))
-    dp.register_message_handler(students_ans2, Text(equals='Какие общежития есть в СПбПУ?'))
-    dp.register_message_handler(students_ans3, Text(equals='Какое общежитие мне дадут?'))
-    dp.register_message_handler(students_ans4, Text(equals='Сколькo стоит проживание в общежитии?'))
-    dp.register_message_handler(students_ans5, Text(equals='Как прoисходит оплата за проживание?'))
+    disp.register_message_handler(students_ans1, Text(equals='Кто может получить общежитие?'))
+    disp.register_message_handler(students_ans2, Text(equals='Какие общежития есть в СПбПУ?'))
+    disp.register_message_handler(students_ans3, Text(equals='Какое общежитие мне дадут?'))
+    disp.register_message_handler(students_ans4, Text(equals='Сколькo стоит проживание в общежитии?'))
+    disp.register_message_handler(students_ans5, Text(equals='Как прoисходит оплата за проживание?'))
 
     # Полезное
-    dp.register_message_handler(adm_sc, Text(equals='Администрация СТГ'))
-    dp.register_message_handler(center_settlement, Text(equals='Центр поселения'))
-    dp.register_message_handler(passport, Text(equals='Паспортный стол'))
+    disp.register_message_handler(adm_sc, Text(equals='Администрация СТГ'))
+    disp.register_message_handler(center_settlement, Text(equals='Центр поселения'))
+    disp.register_message_handler(passport, Text(equals='Паспортный стол'))
 
     # dp.register_message_handler(auth, Text(equals='Авторизация'))
