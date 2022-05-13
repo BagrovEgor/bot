@@ -178,7 +178,7 @@ async def livers_ans2(message: types.Message):
 async def students(message: types.Message):
     global lite_back
     lite_back = 1
-    await bot.send_message(message.from_user.id, 'Вы выбрали раздел: Студентам', reply_markup=studentskb_client)
+    await bot.send_message(message.from_user.id, 'Вы выбрали раздел: Абитуриентам', reply_markup=studentskb_client)
 
 
 async def students_ans1(message: types.Message):
@@ -239,7 +239,7 @@ def register_handlers_client(dp: Dispatcher):  # аннотация типов
 
     # ЗВ
     dp.register_message_handler(livers, Text(equals='Проживающим'))
-    dp.register_message_handler(students, Text(equals='Студентам'))
+    dp.register_message_handler(students, Text(equals='Абитуриентам'))
     dp.register_message_handler(NoQ, Text(equals='Нет ответа?'))
 
     # Вопросы
