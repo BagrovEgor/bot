@@ -1,7 +1,7 @@
 from aiogram import types, Dispatcher
 from dop import dp, bot
 from keyboards.client_kb import kb_client
-#from keyboards.client_kb import lkkb_client
+# from keyboards.client_kb import lkkb_client
 from keyboards.client_kb import obkb_client
 from keyboards.client_kb import sskb_client
 from keyboards.client_kb import zvkb_client
@@ -12,8 +12,6 @@ from keyboards.client_kb import studentskb_client
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher import FSMContext
-
-import tracemalloc
 import sqlite3 as sq
 
 
@@ -29,7 +27,7 @@ class Form(StatesGroup):
 
 
 dorm_names = ['0', '1', '3', '4', '4а', '5', '6', '7', '8', '10', '11', '12', '13', '14а', '14б', '14ц', '15',
-              '16', '17', '18', '18', '19', '20']
+              '16', '17', '18', '19', '20']
 
 
 @dp.message_handler(state=Form.name)
@@ -44,10 +42,10 @@ async def process_name(message: types.Message, state: FSMContext):
     if message.text != 'Назад':
         base = sq.connect('basa.db')
         cur = base.cursor()
-        user = message.from_user.id
+        # user = message.from_user.id
         # print(user)
         i = cur.execute('SELECT * FROM info_dorms').fetchall()
-
+        print(dorm_num)
         if dorm_num == 3:
             await bot.send_message(message.from_user.id,
                                    f'Общежитие №{message.text}\n\n'
@@ -75,11 +73,12 @@ async def process_name(message: types.Message, state: FSMContext):
         await Form.name.set()
 
     else:
-        await message.reply('Дейтсвие выполнено', reply_markup=kb_client)
+        await message.reply('Действие выполнено', reply_markup=kb_client)
 
-
-'''async def lk(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Вы выбрали раздел: Личный кабинет', reply_markup=lkkb_client)'''
+'''
+async def lk(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Вы выбрали раздел: Личный кабинет', reply_markup=lkkb_client)
+'''
 
 
 async def ob(message: types.Message):
@@ -154,7 +153,8 @@ async def plug(message: types.Message):
 async def info_SC(message: types.Message):
     await bot.send_message(message.from_user.id,
                            'ОСС – это орган студенческого самоуправления в Студенческом городке СПбПУ. '
-                           'Мы защищаем права и интересы студентов перед администрацией. Наша основная задача - улучшение качества жизни в Студгородке. '
+                           'Мы защищаем права и интересы студентов перед администрацией. Наша основная задача - '
+                           'улучшение качества жизни в Студгородке. '
                            'Также мы занимаемся организацией мероприятий в общежитиях и университете.\n\n'
                            'Председатель: Перец Алина', reply_markup=sskb_client)
 
@@ -178,7 +178,7 @@ async def livers_ans2(message: types.Message):
 async def students(message: types.Message):
     global lite_back
     lite_back = 1
-    await bot.send_message(message.from_user.id, 'Вы выбрали раздел: Студентам', reply_markup=studentskb_client)
+    await bot.send_message(message.from_user.id, 'Вы выбрали раздел: Абитуриентам', reply_markup=studentskb_client)
 
 
 async def students_ans1(message: types.Message):
@@ -222,39 +222,39 @@ async def auth(message: types.Message):
 '''
 
 
-def register_handlers_client(dp: Dispatcher):  # аннотация типов
-    ## Главное меню
-    dp.register_message_handler(greeting, commands=['start'])
-    #dp.register_message_handler(lk, Text(equals='Личный кабинет'))
-    dp.register_message_handler(ob, Text(equals='Общежития'))
-    dp.register_message_handler(ss, Text(equals='Студенческий совет'))
-    dp.register_message_handler(zv, Text(equals='Задать вопрос'))
-    dp.register_message_handler(useful, Text(equals='Полезное'))
+def register_handlers_client(disp: Dispatcher):  # аннотация типов
+    # Главное меню
+    disp.register_message_handler(greeting, commands=['start'])
+    # dp.register_message_handler(lk, Text(equals='Личный кабинет'))
+    disp.register_message_handler(ob, Text(equals='Общежития'))
+    disp.register_message_handler(ss, Text(equals='Студенческий совет'))
+    disp.register_message_handler(zv, Text(equals='Задать вопрос'))
+    disp.register_message_handler(useful, Text(equals='Полезное'))
 
-    dp.register_message_handler(useful, Text(equals='Полезное'))
-    dp.register_message_handler(back, Text(equals='Назад'))
-    ######### СС
-    dp.register_message_handler(info_SC, Text(equals='Кто мы?'))
-    dp.register_message_handler(plug, Text(equals='Группа ВК'))
+    disp.register_message_handler(useful, Text(equals='Полезное'))
+    disp.register_message_handler(back, Text(equals='Назад'))
+    # СС
+    disp.register_message_handler(info_SC, Text(equals='Кто мы?'))
+    disp.register_message_handler(plug, Text(equals='Группа ВК'))
 
     # ЗВ
-    dp.register_message_handler(livers, Text(equals='Проживающим'))
-    dp.register_message_handler(students, Text(equals='Студентам'))
-    dp.register_message_handler(NoQ, Text(equals='Нет ответа?'))
+    disp.register_message_handler(livers, Text(equals='Проживающим'))
+    disp.register_message_handler(students, Text(equals='Абитуриентам'))
+    disp.register_message_handler(NoQ, Text(equals='Нет ответа?'))
 
     # Вопросы
-    dp.register_message_handler(livers_ans1, Text(equals='Как происходит оплата за проживание?'))
-    dp.register_message_handler(livers_ans2, Text(equals='Сколько стоит проживание в общежитии?'))
+    disp.register_message_handler(livers_ans1, Text(equals='Как происходит оплата за проживание?'))
+    disp.register_message_handler(livers_ans2, Text(equals='Сколько стоит проживание в общежитии?'))
 
-    dp.register_message_handler(students_ans1, Text(equals='Кто может получить общежитие?'))
-    dp.register_message_handler(students_ans2, Text(equals='Какие общежития есть в СПбПУ?'))
-    dp.register_message_handler(students_ans3, Text(equals='Какое общежитие мне дадут?'))
-    dp.register_message_handler(students_ans4, Text(equals='Сколькo стоит проживание в общежитии?'))
-    dp.register_message_handler(students_ans5, Text(equals='Как прoисходит оплата за проживание?'))
+    disp.register_message_handler(students_ans1, Text(equals='Кто может получить общежитие?'))
+    disp.register_message_handler(students_ans2, Text(equals='Какие общежития есть в СПбПУ?'))
+    disp.register_message_handler(students_ans3, Text(equals='Какое общежитие мне дадут?'))
+    disp.register_message_handler(students_ans4, Text(equals='Сколькo стоит проживание в общежитии?'))
+    disp.register_message_handler(students_ans5, Text(equals='Как прoисходит оплата за проживание?'))
 
-    ## Полезное
-    dp.register_message_handler(adm_sc, Text(equals='Администрация СТГ'))
-    dp.register_message_handler(center_settlement, Text(equals='Центр поселения'))
-    dp.register_message_handler(passport, Text(equals='Паспортный стол'))
+    # Полезное
+    disp.register_message_handler(adm_sc, Text(equals='Администрация СТГ'))
+    disp.register_message_handler(center_settlement, Text(equals='Центр поселения'))
+    disp.register_message_handler(passport, Text(equals='Паспортный стол'))
 
     # dp.register_message_handler(auth, Text(equals='Авторизация'))
