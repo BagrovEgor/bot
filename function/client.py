@@ -7,7 +7,7 @@ from keyboards.client_kb import sskb_client
 from keyboards.client_kb import zvkb_client
 from keyboards.client_kb import usekb_client
 from keyboards.client_kb import liverskb_client
-from keyboards.client_kb import studentskb_client
+from keyboards.client_kb import entrantskb_client
 
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import State, StatesGroup
@@ -26,26 +26,25 @@ class Form(StatesGroup):
     name = State()  # Will be represented in storage as 'Form:name', state(), чтобы указать, что этот состояние
 
 
-dorm_names = ['0', '1', '3', '4', '4а', '5', '6', '7', '8', '10', '11', '12', '13', '14а', '14б', '14ц', '15',
-              '16', '17', '18', '19', '20']
+class AnsForm(StatesGroup):
+    name = State()
 
 
 @dp.message_handler(state=Form.name)
 async def process_name(message: types.Message, state: FSMContext):
-    # print('ok')
+    base = sq.connect('basa.db')
+    cur = base.cursor()
+
     async with state.proxy() as data:  # открыть словарь дата
         if message.text != 'Назад':
-            data['name'] = dorm_names.index(message.text)
+            data['name'] = cur.execute(f"select id from main.dorms where dorm == '{message.text}';").fetchone()
             dorm_num = data['name']
+            dorm_num = dorm_num[0]
 
     await Form.next()
     if message.text != 'Назад':
-        base = sq.connect('basa.db')
-        cur = base.cursor()
-        # user = message.from_user.id
-        # print(user)
         i = cur.execute('SELECT * FROM info_dorms').fetchall()
-        print(dorm_num)
+        # print(dorm_num)
         if dorm_num == 3:
             await bot.send_message(message.from_user.id,
                                    f'Общежитие №{message.text}\n\n'
@@ -66,14 +65,14 @@ async def process_name(message: types.Message, state: FSMContext):
         await bot.send_location(message.from_user.id, i[dorm_num - 1][6], i[dorm_num - 1][7])
         # await bot.send_message(message.from_user.id, f"*yyy*",
         # reply_markup=obkb_client, parse_mode="Markdown")
-
-        base.commit()
-        base.close()
-
         await Form.name.set()
 
     else:
         await message.reply('Действие выполнено', reply_markup=kb_client)
+
+    base.commit()
+    base.close()
+
 
 '''
 async def lk(message: types.Message):
@@ -134,16 +133,8 @@ async def passport(message: types.Message):
                            reply_markup=usekb_client)
 
 
-lite_back = 0
-
-
 async def back(message: types.Message):
-    global lite_back
-    if lite_back == 1:
-        await message.reply('Действие выполнено', reply_markup=zvkb_client)
-    else:
-        await message.reply('Действие выполнено', reply_markup=kb_client)
-    lite_back = 0
+    await message.reply('Действие выполнено', reply_markup=kb_client)
 
 
 async def plug(message: types.Message):
@@ -159,62 +150,43 @@ async def info_SC(message: types.Message):
                            'Председатель: Перец Алина', reply_markup=sskb_client)
 
 
+@dp.message_handler(state=AnsForm.name)
+async def process_name(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:  # открыть словарь дата
+        data['name'] = message.text
+
+    await AnsForm.next()
+    if message.text != 'Назад':
+        base = sq.connect('basa.db')
+        cur = base.cursor()
+
+        answer = cur.execute(f"select Answer from main.FAQ where Question == '{message.text}';").fetchone()
+        answer = answer[0]
+        await bot.send_message(message.from_user.id, f"{answer}")
+
+        base.commit()
+        base.close()
+        await AnsForm.name.set()
+
+    else:
+        await message.reply('Действие выполнено', reply_markup=zvkb_client)
+
+
 async def livers(message: types.Message):
-    global lite_back
-    lite_back = 1
     await bot.send_message(message.from_user.id, 'Вы выбрали раздел: Проживающим', reply_markup=liverskb_client)
+    await AnsForm.name.set()
 
 
-async def livers_ans1(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Оплата происходит помесячно, не позднее 10 числа следующего '
-                                                 'месяца за предыдущий', reply_markup=liverskb_client)
-
-
-async def livers_ans2(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Размер платы зависит от типа общежития, условий проживания '
-                                                 'и стоимости коммунальных услуг', reply_markup=liverskb_client)
-
-
-async def students(message: types.Message):
-    global lite_back
-    lite_back = 1
-    await bot.send_message(message.from_user.id, 'Вы выбрали раздел: Абитуриентам', reply_markup=studentskb_client)
-
-
-async def students_ans1(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Нуждающимся в жилых помещениях в общежитиях обучающимся по основным '
-                                                 'образовательным программам высшего образования по очной форме '
-                                                 'обучения и на период прохождения промежуточной и итоговой аттестации '
-                                                 'обучающимся по данным образовательным программам по заочной форме '
-                                                 'обучения, предоставляются жилые помещения в общежитиях при наличии '
-                                                 'соответствующего жилищного фонда у этих организаций.',
-                           reply_markup=studentskb_client)
-
-
-async def students_ans2(message: types.Message):
-    await bot.send_message(message.from_user.id, 'В нашем университете присутствуют все типы общежитий:'
-                                                 ' коридорные, блочные и квартирные.', reply_markup=studentskb_client)
-
-
-async def students_ans3(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Зависит от института, на который вы поступили, а '
-                                                 'также от ваших проходных баллов', reply_markup=studentskb_client)
-
-
-async def students_ans4(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Размер платы зависит от типа общежития, условий проживания'
-                                                 ' и стоимости коммунальных услуг', reply_markup=studentskb_client)
-
-
-async def students_ans5(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Оплата происходит помесячно, не позднее 10 числа следующего'
-                                                 ' месяца за предыдущий', reply_markup=studentskb_client)
+async def entrants(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Вы выбрали раздел: Абитуриентам', reply_markup=entrantskb_client)
+    await AnsForm.name.set()
 
 
 async def NoQ(message: types.Message):
     await bot.send_message(message.from_user.id, 'Обратиться к Администрации СТГ: '
                                                  'Обратиться в Студенческий совет: https://vk.com/studg',
                            reply_markup=zvkb_client)
+
 
 '''
 async def auth(message: types.Message):
@@ -239,18 +211,8 @@ def register_handlers_client(disp: Dispatcher):  # аннотация типов
 
     # ЗВ
     disp.register_message_handler(livers, Text(equals='Проживающим'))
-    disp.register_message_handler(students, Text(equals='Абитуриентам'))
+    disp.register_message_handler(entrants, Text(equals='Абитуриентам'))
     disp.register_message_handler(NoQ, Text(equals='Нет ответа?'))
-
-    # Вопросы
-    disp.register_message_handler(livers_ans1, Text(equals='Как происходит оплата за проживание?'))
-    disp.register_message_handler(livers_ans2, Text(equals='Сколько стоит проживание в общежитии?'))
-
-    disp.register_message_handler(students_ans1, Text(equals='Кто может получить общежитие?'))
-    disp.register_message_handler(students_ans2, Text(equals='Какие общежития есть в СПбПУ?'))
-    disp.register_message_handler(students_ans3, Text(equals='Какое общежитие мне дадут?'))
-    disp.register_message_handler(students_ans4, Text(equals='Сколькo стоит проживание в общежитии?'))
-    disp.register_message_handler(students_ans5, Text(equals='Как прoисходит оплата за проживание?'))
 
     # Полезное
     disp.register_message_handler(adm_sc, Text(equals='Администрация СТГ'))
