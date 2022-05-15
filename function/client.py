@@ -49,36 +49,36 @@ async def process_name(message: types.Message, state: FSMContext):
         if (dorm_num == 3 or dorm_num == 6):
             await bot.send_message(message.from_user.id,
                                    f'Общежитие №{message.text}\n\n'
-                                   f'Адрес: {i[dorm_num - 1][2]}\n'
+                                   f'Адрес: {i[dorm_num - 1][2]}\n\n'
                                    f'Тип: {i[dorm_num - 1][1]}\n\n'
-                                   f'Заведующая: {i[dorm_num - 1][3]}'
-                                   f'Администратор: {i[dorm_num - 1][4]}\n'
+                                   f'Заведующая: {i[dorm_num - 1][3]}\n\n'
+                                   f'Администратор: {i[dorm_num - 1][4]}\n\n'
                                    f'Почта: {i[dorm_num - 1][5]}\n\n'
                                    f'Группа ВК: {i[dorm_num - 1][6]}\n',
                                    reply_markup=obkb_client)
         elif dorm_num == 7:
             await bot.send_message(message.from_user.id,
                                    f"Общежитие №{message.text} (для аспирантов)\n\n"
-                                   f"Адрес: {i[dorm_num - 1][2]}\n"
+                                   f"Адрес: {i[dorm_num - 1][2]}\n\n"
                                    f'Тип: {i[dorm_num - 1][1]}\n\n'
-                                   f"Заведующая: {i[dorm_num - 1][3]}\n"
+                                   f"Заведующая: {i[dorm_num - 1][3]}\n\n"
                                    f"Почта: {i[dorm_num - 1][5]}\n",
                                    reply_markup=obkb_client)
 
         elif (dorm_num == 9 or dorm_num == 11 or dorm_num == 16):
             await bot.send_message(message.from_user.id,
                                    f"Общежитие №{message.text}\n\n"
-                                   f"Адрес: {i[dorm_num - 1][2]}\n"
+                                   f"Адрес: {i[dorm_num - 1][2]}\n\n"
                                    f'Тип: {i[dorm_num - 1][1]}\n\n'
-                                   f"Заведующая: {i[dorm_num - 1][3]}\n"
+                                   f"Заведующая: {i[dorm_num - 1][3]}\n\n"
                                    f"Почта: {i[dorm_num - 1][5]}\n",
                                    reply_markup=obkb_client)
         else:
             await bot.send_message(message.from_user.id,
                                    f"Общежитие №{message.text}\n\n"
-                                   f"Адрес: {i[dorm_num - 1][2]}\n"
+                                   f"Адрес: {i[dorm_num - 1][2]}\n\n"
                                    f'Тип: {i[dorm_num - 1][1]}\n\n'
-                                   f"Заведующая: {i[dorm_num - 1][3]}\n"
+                                   f"Заведующая: {i[dorm_num - 1][3]}\n\n"
                                    f"Почта: {i[dorm_num - 1][5]}\n\n"
                                    f"Группа ВК: {i[dorm_num - 1][6]}\n",
                                    reply_markup=obkb_client)
