@@ -8,6 +8,7 @@ from keyboards.client_kb import zvkb_client
 from keyboards.client_kb import usekb_client
 from keyboards.client_kb import liverskb_client
 from keyboards.client_kb import entrantskb_client
+from keyboards.client_kb import benefiterskb_client
 
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import State, StatesGroup
@@ -21,7 +22,7 @@ async def greeting(message: types.Message):
  университета создала этого бота для помощи решения вопросов, касающихся общежитий и Студенческого Совета!\n\n\
 Чтобы начать, нажми кнопку или отправь сообщение!', reply_markup=kb_client)
 
-
+7
 class Form(StatesGroup):
     name = State()  # Will be represented in storage as 'Form:name', state(), чтобы указать, что этот состояние
 
@@ -182,6 +183,11 @@ async def entrants(message: types.Message):
     await AnsForm.name.set()
 
 
+async def benefiters(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Вы выбрали раздел: Льготным категориям', reply_markup=benefiterskb_client)
+    await AnsForm.name.set()
+
+
 async def NoQ(message: types.Message):
     await bot.send_message(message.from_user.id, 'Обратиться к Администрации СТГ: '
                                                  'Обратиться в Студенческий совет: https://vk.com/studg',
@@ -212,6 +218,7 @@ def register_handlers_client(disp: Dispatcher):  # аннотация типов
     # ЗВ
     disp.register_message_handler(livers, Text(equals='Проживающим'))
     disp.register_message_handler(entrants, Text(equals='Абитуриентам'))
+    disp.register_message_handler(benefiters, Text(equals='Льготным категориям'))
     disp.register_message_handler(NoQ, Text(equals='Нет ответа?'))
 
     # Полезное
