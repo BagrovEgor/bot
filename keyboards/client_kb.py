@@ -28,32 +28,19 @@ sskb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
 sskb_client.add(sskb1).add(sskb2).add(kb_back)
 
 # Задать вопросы
-zvkb1 = KeyboardButton(text='Проживающим')
-zvkb2 = KeyboardButton(text='Абитуриентам')
+zvkb1 = KeyboardButton(text='Абитуриентам')
+zvkb2 = KeyboardButton(text='Проживающим')
 zvkb3 = KeyboardButton(text='Нет ответа?')
+zvkb4 = KeyboardButton(text='Льготным категориям')
 
 zvkb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
-zvkb_client.add(zvkb1).add(zvkb2).add(zvkb3).add(kb_back)
+zvkb_client.add(zvkb1).add(zvkb2).add(zvkb4).add(kb_back)
 
 # Контакты
 ka1 = KeyboardButton(text='Дублировать информацию')
 
 ka_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
 ka_client.add(ka1).add(kb_back)
-
-# вопросы
-liverskb1 = KeyboardButton(text='Как происходит оплата за проживание?')
-liverskb2 = KeyboardButton(text='Сколько стоит проживание в общежитии?')
-liverskb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
-liverskb_client.add(liverskb1).add(liverskb2).add(kb_back)
-
-studentskb1 = KeyboardButton(text='Кто может получить общежитие?')
-studentskb2 = KeyboardButton(text='Какие общежития есть в СПбПУ?')
-studentskb3 = KeyboardButton(text='Какое общежитие мне дадут?')
-studentskb4 = KeyboardButton(text='Сколькo стоит проживание в общежитии?')
-studentskb5 = KeyboardButton(text='Как прoисходит оплата за проживание?')
-studentskb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
-studentskb_client.add(studentskb1).add(studentskb2).add(studentskb3).add(studentskb4).add(studentskb5).add(kb_back)
 
 # общаги
 
@@ -71,6 +58,30 @@ for j in range(21):
 
 obkb_client.add(kb_back)
 base.close()
+
+# Вопросы
+base = sq.connect('basa.db')
+cur = base.cursor()
+
+i = cur.execute('SELECT Question FROM FAQ').fetchall()
+
+liverskb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
+for j in range(0, 4):
+    liverskb_client.add(i[j][0])
+liverskb_client.add(zvkb3).add(kb_back)
+
+entrantskb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
+for j in range(5, 13):
+    entrantskb_client.add(i[j][0])
+entrantskb_client.add(zvkb3).add(kb_back)
+
+benefiterskb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
+for j in range(14, 17):
+    benefiterskb_client.add(i[j][0])
+benefiterskb_client.add(zvkb3).add(kb_back)
+
+base.close()
+
 
 # Полезное
 use_kb1 = KeyboardButton(text='Администрация СТГ')
