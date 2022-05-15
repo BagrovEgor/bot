@@ -28,13 +28,13 @@ sskb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
 sskb_client.add(sskb1).add(sskb2).add(kb_back)
 
 # Задать вопросы
-zvkb1 = KeyboardButton(text='Проживающим')
-zvkb2 = KeyboardButton(text='Абитуриентам')
+zvkb1 = KeyboardButton(text='Абитуриентам')
+zvkb2 = KeyboardButton(text='Проживающим')
 zvkb3 = KeyboardButton(text='Нет ответа?')
 zvkb4 = KeyboardButton(text='Льготным категориям')
 
 zvkb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
-zvkb_client.add(zvkb1).add(zvkb2).add(zvkb4).add(zvkb3).add(kb_back)
+zvkb_client.add(zvkb1).add(zvkb2).add(zvkb4).add(kb_back)
 
 # Контакты
 ka1 = KeyboardButton(text='Дублировать информацию')
@@ -68,17 +68,17 @@ i = cur.execute('SELECT Question FROM FAQ').fetchall()
 liverskb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
 for j in range(0, 4):
     liverskb_client.add(i[j][0])
-liverskb_client.add(kb_back)
+liverskb_client.add(zvkb3).add(kb_back)
 
 entrantskb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
 for j in range(5, 13):
     entrantskb_client.add(i[j][0])
-entrantskb_client.add(kb_back)
+entrantskb_client.add(zvkb3).add(kb_back)
 
 benefiterskb_client = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
 for j in range(14, 17):
     benefiterskb_client.add(i[j][0])
-benefiterskb_client.add(kb_back)
+benefiterskb_client.add(zvkb3).add(kb_back)
 
 base.close()
 

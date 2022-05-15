@@ -130,7 +130,7 @@ async def passport(message: types.Message):
     i = cur.execute('SELECT * FROM contact_inf').fetchall()
     base.commit()
     base.close()
-    await bot.send_message(message.from_user.id, f'Информация о паспортном столе:\n{i[2][0]} \n\n{i[2][2]}',
+    await bot.send_message(message.from_user.id, f'Информация о паспортном столе:\n{i[2][0]} \n{i[3][0]} \n{i[2][2]}',
                            reply_markup=usekb_client)
 
 
@@ -157,7 +157,7 @@ async def process_name(message: types.Message, state: FSMContext):
         data['name'] = message.text
 
     await AnsForm.next()
-    if message.text != 'Назад':
+    if (message.text != 'Назад' and message.text != 'Нет ответа?'):
         base = sq.connect('basa.db')
         cur = base.cursor()
 
@@ -169,8 +169,13 @@ async def process_name(message: types.Message, state: FSMContext):
         base.close()
         await AnsForm.name.set()
 
-    else:
+    elif message.text == 'Назад':
         await message.reply('Действие выполнено', reply_markup=zvkb_client)
+    else:
+        await bot.send_message(message.from_user.id, 'Обратиться к Администрации СТГ: '
+                                                     'Обратиться в Студенческий совет: https://vk.com/studg',
+                               reply_markup=zvkb_client)
+
 
 
 async def livers(message: types.Message):
@@ -187,11 +192,6 @@ async def benefiters(message: types.Message):
     await bot.send_message(message.from_user.id, 'Вы выбрали раздел: Льготным категориям', reply_markup=benefiterskb_client)
     await AnsForm.name.set()
 
-
-async def NoQ(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Обратиться к Администрации СТГ: '
-                                                 'Обратиться в Студенческий совет: https://vk.com/studg',
-                           reply_markup=zvkb_client)
 
 
 '''
@@ -219,7 +219,7 @@ def register_handlers_client(disp: Dispatcher):  # аннотация типов
     disp.register_message_handler(livers, Text(equals='Проживающим'))
     disp.register_message_handler(entrants, Text(equals='Абитуриентам'))
     disp.register_message_handler(benefiters, Text(equals='Льготным категориям'))
-    disp.register_message_handler(NoQ, Text(equals='Нет ответа?'))
+
 
     # Полезное
     disp.register_message_handler(adm_sc, Text(equals='Администрация СТГ'))
