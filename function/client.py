@@ -22,7 +22,7 @@ async def greeting(message: types.Message):
  университета создала этого бота для помощи решения вопросов, касающихся общежитий и Студенческого Совета!\n\n\
 Чтобы начать, нажми кнопку или отправь сообщение!', reply_markup=kb_client)
 
-7
+
 class Form(StatesGroup):
     name = State()  # Will be represented in storage as 'Form:name', state(), чтобы указать, что этот состояние
 
